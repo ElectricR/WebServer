@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+    controller:
+        image: electricrainbow/pm-default-server-image:v3.0.0
+        container_name: pm-default-server-container
+        ports:
+          - 10050:10050
+        depends_on:
+          - service
+        networks:
+          - pm-network
+        depends_on:
+          - redis
+          - mongo
+    redis:
+        image: redis
+        container_name: redis
+        networks:
+          - pm-network
+    mongo:
+        image: mongo
+        container_name: mongo
+        networks:
+          - pm-network
+
+networks:
+    pm-network:

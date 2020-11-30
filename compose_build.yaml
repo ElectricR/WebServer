@@ -1,0 +1,8 @@
+version: "3.7"
+
+services:
+    controller:
+        image: electricrainbow/pm-default-server-image:v3.0.0
+        build:
+            context: .
+            dockerfile: Dockerfile_server

@@ -1,0 +1,9 @@
+FROM python:3
+RUN pip3 install flask redis pymongo
+COPY server.py /
+COPY controller.py /
+COPY service.py /
+COPY repository.py /
+EXPOSE 10050
+STOPSIGNAL SIGINT
+CMD ["python3", "server.py"]
