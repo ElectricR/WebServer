@@ -2,5 +2,6 @@ language: python3
 
 install:
         - pip install -r requirements.txt
+        
 script:
-        - test_server
+        - python3 test_server.py
