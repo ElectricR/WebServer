@@ -6,13 +6,13 @@ push:
 	docker push electricrainbow/pm-default-server-image:$(SERVER_VERSION)
 
 build:
-	docker-compose --env-file .env -f compose_build.yaml build
+	docker-compose -f compose_build.yaml --env-file .env build
 
 start:
-	docker-compose --env-file .env -f compose.yaml up -d
+	docker-compose -f compose.yaml --env-file .env up -d
 
 stop:
-	docker-compose --env-file .env -f compose.yaml down
+	docker-compose -f compose.yaml --env-file .env down
 
 test:
 	python3 test_server.py
