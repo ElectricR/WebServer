@@ -1,6 +1,6 @@
 #!make
 include .env
-export
+export $(cat .env | xargs)
 
 push:
 	docker push electricrainbow/pm-default-server-image:$(SERVER_VERSION)

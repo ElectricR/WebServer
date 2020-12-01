@@ -24,8 +24,11 @@ class Repository:
     
     def put_to_cache(self, file_name, data):
         self.cache.set(file_name, data)
+        self.dbase.delete_many({'key':file_name})
+        self.dbase.insert_one({'key': file_name, 'value': data})
     
     def put_to_dbase(self, file_name, data):
+        self.dbase.delete_many({'key':file_name})
         self.dbase.insert_one({'key': file_name, 'value': data})
     
     def delete(self, file_name):
