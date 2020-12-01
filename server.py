@@ -4,7 +4,6 @@ from flask import Flask, request
 import controller
 import service
 import os
-import dotenv
 
 app = Flask(__name__)
 
@@ -31,6 +30,5 @@ def delete_req(file_name):
 if __name__ == '__main__':
     ctrl = controller.Controller()
     serv = service.Service()
-    dotenv.load_dotenv()
     
     app.run(host='0.0.0.0', port=os.environ["PORT"])

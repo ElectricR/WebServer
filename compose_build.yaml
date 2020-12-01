@@ -1,7 +1,12 @@
 version: "3.7"
 
 services:
-    controller:
+    balancer:
+        image: electricrainbow/pm-balancer-server-image:${BALANCER_VERSION}
+        build:
+            context: .
+            dockerfile: Dockerfile_balancer
+    server:
         image: "electricrainbow/pm-default-server-image:${SERVER_VERSION}"
         build:
             context: .

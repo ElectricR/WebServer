@@ -1,21 +1,57 @@
 version: "3.7"
 
 services:
-    controller:
-        image: electricrainbow/pm-default-server-image:${SERVER_VERSION}
-        container_name: pm-default-server-container
+    balancer:
+        image: electricrainbow/pm-balancer-server-image:${BALANCER_VERSION}
         ports:
-          - ${PORT}:${PORT}
+          - ${BALANCER_PORT}:${BALANCER_PORT}
         depends_on:
-          - service
+          - server1
+          - server2
+        networks:
+          - pm-network
+        environment:
+          - PORT=${BALANCER_PORT}
+    server1:
+        image: electricrainbow/pm-default-server-image:${SERVER_VERSION}
+        container_name: pm-default-server-container-1
+        ports:
+          - "${SERVER1_PORT}"
         networks:
           - pm-network
         depends_on:
-          - redis
+          - redis1
           - mongo
-    redis:
+        environment:
+          - PORT=${SERVER1_PORT}
+          - REDIS_PORT=${REDIS1_PORT}
+    server2:
+        image: electricrainbow/pm-default-server-image:${SERVER_VERSION}
+        container_name: pm-default-server-container-2
+        ports:
+          - "${SERVER2_PORT}"
+        networks:
+          - pm-network
+        depends_on:
+          - redis2
+          - mongo
+        environment:
+          - PORT=${SERVER2_PORT}
+          - REDIS_PORT=${REDIS2_PORT}
+    redis1:
         image: redis
-        container_name: redis
+        container_name: redis1
+        ports:
+          - "6379"
+        command: --port 6379
+        networks:
+          - pm-network
+    redis2:
+        image: redis
+        container_name: redis2
+        ports:
+          - "6380"
+        command: --port 6380
         networks:
           - pm-network
     mongo:

@@ -4,13 +4,14 @@ export $(cat .env | xargs)
 
 push:
 	echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin; \
-	docker push electricrainbow/pm-default-server-image:$(SERVER_VERSION)
+	docker push electricrainbow/pm-default-server-image:$(SERVER_VERSION); \
+	docker push electricrainbow/pm-balancer-server-image:$(BALANCER_VERSION); \
 
 build:
 	docker-compose -f compose_build.yaml --env-file .env build
 
 start:
-	docker-compose -f compose.yaml --env-file .env up -d
+	docker-compose -f compose.yaml --env-file .env up 
 
 stop:
 	docker-compose -f compose.yaml --env-file .env down
@@ -19,7 +20,7 @@ test:
 	python3 test_server.py
 
 clean:
-	docker image rm electricrainbow/pm-default-server-image:$(SERVER_VERSION) mongo redis
+	docker image rm electricrainbow/pm-default-server-image:$(SERVER_VERSION) electricrainbow/pm-balancer-server-image:$(BALANCER_VERSION) mongo redis
 	
 
 healthcheck:
