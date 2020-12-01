@@ -3,6 +3,7 @@ include .env
 export $(cat .env | xargs)
 
 push:
+	echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin; \
 	docker push electricrainbow/pm-default-server-image:$(SERVER_VERSION)
 
 build:

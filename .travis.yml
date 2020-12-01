@@ -17,3 +17,7 @@ service:
 script:
         - make build
         - make test
+deploy:
+        provider: script
+        script: make push
+                
