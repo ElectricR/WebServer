@@ -7,4 +7,5 @@ service:
         - docker 
         
 script:
+        - docker-compose --version
         - make test
