@@ -1,9 +1,9 @@
 FROM python:3
+COPY requirements.txt /
 RUN pip install -r requirements.txt
 COPY server.py /
 COPY controller.py /
 COPY service.py /
 COPY repository.py /
-COPY requirements.txt /
 STOPSIGNAL SIGINT
 CMD python3 server.py
