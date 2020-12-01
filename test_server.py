@@ -1,6 +1,7 @@
 import unittest
 import os
 import requests as req
+import dotenv
 from time import sleep
 
 def put_req(file_, data):
@@ -15,6 +16,7 @@ def delete_req(file_):
 class test_server(unittest.TestCase):
 
     def setUp(self):
+        dotenv.load_dotenv()
         os.system("make start")
         sleep(3)
 
