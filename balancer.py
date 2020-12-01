@@ -41,7 +41,7 @@ class Balancer:
             self.check_JWT_auth(request.headers.get('Authorization').split(' ')[1])
         except:
             return '', 403
-        resp = req.get('http://{0}:{1}/storage/{2}'.format(f'pm-default-server-container-{str(hash(file_name)%2 + 1)}', os.environ["PORT"] + hash(file_name)%2 + 1, file_name))
+        resp = req.get('http://{0}:{1}/storage/{2}'.format(f'pm-default-server-container-{str(hash(file_name)%2 + 1)}', f'{int(os.environ["PORT"]) + hash(file_name)%2 + 1}', file_name))
         return resp.text, resp.status_code
     
     def put(self, request, file_name):
@@ -49,7 +49,9 @@ class Balancer:
             self.check_JWT_auth(request.headers.get('Authorization').split(' ')[1])
         except:
             return '', 403
-        resp = req.put('http://{0}:{1}/storage/{2}'.format(f'pm-default-server-container-{str(hash(file_name)%2 + 1)}', os.environ["PORT"] + hash(file_name)%2 + 1, file_name) , data = request.data.decode(), headers = request.headers)
+        headers = dict(request.headers)
+        del headers['Authorization']
+        resp = req.put('http://{0}:{1}/storage/{2}'.format(f'pm-default-server-container-{str(hash(file_name)%2 + 1)}', f'{int(os.environ["PORT"]) + hash(file_name)%2 + 1}' , file_name) , data = request.data.decode(), headers = headers)
         return resp.text, resp.status_code
     
     def delete(self, request, file_name):
@@ -57,7 +59,7 @@ class Balancer:
             self.check_JWT_auth(request.headers.get('Authorization').split(' ')[1])
         except:
             return '', 403
-        resp = req.delete('http://{0}:{1}/storage/{2}'.format(f'pm-default-server-container-{str(hash(file_name)%2 + 1)}', os.environ["PORT"] + hash(file_name)%2 + 1, file_name))
+        resp = req.delete('http://{0}:{1}/storage/{2}'.format(f'pm-default-server-container-{str(hash(file_name)%2 + 1)}', f'{int(os.environ["PORT"]) + hash(file_name)%2 + 1}' , file_name))
         return resp.text, resp.status_code
    
 

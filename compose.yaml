@@ -25,6 +25,7 @@ services:
         environment:
           - PORT=${SERVER1_PORT}
           - REDIS_PORT=${REDIS1_PORT}
+          - REDIS_HOST=redis1
     server2:
         image: electricrainbow/pm-default-server-image:${SERVER_VERSION}
         container_name: pm-default-server-container-2
@@ -38,6 +39,7 @@ services:
         environment:
           - PORT=${SERVER2_PORT}
           - REDIS_PORT=${REDIS2_PORT}
+          - REDIS_HOST=redis2
     redis1:
         image: redis
         container_name: redis1

@@ -7,7 +7,7 @@ import os
 
 app = Flask(__name__)
 
-@app.route('/<file_name>', methods=['GET'])
+@app.route('/storage/<file_name>', methods=['GET'])
 def get_req(file_name):
     resp = serv.get(file_name)
     if resp == None:
@@ -15,14 +15,14 @@ def get_req(file_name):
     else:
         return resp, 200
 
-@app.route('/<file_name>', methods=['PUT'])
+@app.route('/storage/<file_name>', methods=['PUT'])
 def put_req(file_name):
     if not ctrl.validate(request):
     	return '', 400
     serv.put(file_name, request.data.decode())
     return '', 201
     
-@app.route('/<file_name>', methods=['DELETE'])
+@app.route('/storage/<file_name>', methods=['DELETE'])
 def delete_req(file_name):
     serv.delete(file_name)
     return '', 204

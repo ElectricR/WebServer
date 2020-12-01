@@ -5,7 +5,7 @@ import os
 class Repository:
 
     def __init__(self):
-        self.cache = redis.Redis(host='redis', port=os.environ["REDIS_PORT"])
+        self.cache = redis.Redis(host=os.environ["REDIS_HOST"], port=os.environ["REDIS_PORT"])
         self.mongoClient = pymongo.MongoClient(host='mongo', port=27017)
         self.dbase = self.mongoClient["hw9"]["files"]
         
