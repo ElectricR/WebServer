@@ -1,6 +1,7 @@
 language: python3
 env:
         - DOCKER_COMPOSE_VERSION=1.25.0
+        - PORT=10050
         
 before_install:
         - sudo rm /usr/local/bin/docker-compose
