@@ -5,7 +5,7 @@ services:
         image: electricrainbow/pm-default-server-image:${SERVER_VERSION}
         container_name: pm-default-server-container
         ports:
-          - 10050:10050
+          - ${PORT}:${PORT}
         depends_on:
           - service
         networks:

@@ -3,5 +3,8 @@ language: python3
 install:
         - pip install -r requirements.txt
         
+service:
+	- docker 
+	
 script:
-        - python3 test_server.py
+        - make test

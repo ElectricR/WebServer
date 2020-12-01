@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
     controller:
-        image: electricrainbow/pm-default-server-image:${SERVER_VERSION}
+        image: "electricrainbow/pm-default-server-image:${SERVER_VERSION}"
         build:
             context: .
             dockerfile: Dockerfile_server

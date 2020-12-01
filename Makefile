@@ -1,6 +1,6 @@
 #!make
 include .env
-export $(cat .env | xargs)
+export
 
 push:
 	docker push electricrainbow/pm-default-server-image:$(SERVER_VERSION)
@@ -13,6 +13,9 @@ start:
 
 stop:
 	docker-compose --env-file .env -f compose.yaml down
+
+test:
+	python3 test_server.py
 
 clean:
 	docker image rm electricrainbow/pm-default-server-image:$(SERVER_VERSION) mongo redis

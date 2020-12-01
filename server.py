@@ -3,6 +3,7 @@ from flask import Flask, request
 
 import controller
 import service
+import os
 
 app = Flask(__name__)
 
@@ -29,4 +30,4 @@ def delete_req(file_name):
 if __name__ == '__main__':
     ctrl = controller.Controller()
     serv = service.Service()
-    app.run(host='0.0.0.0', port=10050)
+    app.run(host='0.0.0.0', port=os.environ["PORT"])
