@@ -1,18 +1,21 @@
+#!make
+include .env
+export $(cat .env | xargs)
 
 push:
-	docker push electricrainbow/pm-default-server-image:v3.0.0
+	docker push electricrainbow/pm-default-server-image:$(SERVER_VERSION)
 
 build:
-	docker-compose -f compose_build.yaml build
+	docker-compose --env-file .env -f compose_build.yaml build
 
 start:
-	docker-compose -f compose.yaml up -d
+	docker-compose --env-file .env -f compose.yaml up -d
 
 stop:
-	docker-compose -f compose.yaml down
+	docker-compose --env-file .env -f compose.yaml down
 
 clean:
-	docker image rm electricrainbow/pm-default-server-image:v3.0.0 mongo redis
+	docker image rm electricrainbow/pm-default-server-image:$(SERVER_VERSION) mongo redis
 	
 
 healthcheck:
