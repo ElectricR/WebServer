@@ -1,5 +1,9 @@
 language: python3
 
+before_install:
+        - sudo apt remove -y docker-compose  
+        - sudo apt install -y docker-compose 
+        
 install:
         - pip install -r requirements.txt
         
