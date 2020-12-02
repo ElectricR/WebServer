@@ -5,20 +5,20 @@ import dotenv
 import base64
 from time import sleep
 
-def put_req(file_, data, token = None):
+def put_req(target, data, token = None):
     headers = {'Content-Type':'application/json'}
     if token: headers['Authorization'] = f'Bearer {token}'
-    return req.put(f'http://localhost:{os.environ["PORT"]}/{file_}', data=data, headers=headers)
+    return req.put(f'http://localhost:{os.environ["PORT"]}/{target}', data=data, headers=headers)
 
-def get_req(file_, token = None):
+def get_req(target, token = None):
     headers = {}
     if token: headers['Authorization'] = f'Bearer {token}'
-    return req.get(f'http://localhost:{os.environ["PORT"]}/{file_}', headers=headers)
+    return req.get(f'http://localhost:{os.environ["PORT"]}/{target}', headers=headers)
 
-def delete_req(file_, token = None):
+def delete_req(target, token = None):
     headers = {}
     if token: headers['Authorization'] = f'Bearer {token}'
-    return req.delete(f'http://localhost:{os.environ["PORT"]}/{file_}', headers=headers)
+    return req.delete(f'http://localhost:{os.environ["PORT"]}/{target}', headers=headers)
 
 def auth(login, password):
     headers = {'Authorization': "Basic " + base64.standard_b64encode(f'{login}:{password}'.encode()).decode()}
@@ -28,7 +28,7 @@ class integration_test(unittest.TestCase):
 
     def setUp(self):
         dotenv.load_dotenv()
-        os.system("docker-compose -f compose.yaml --env-file .env up -d")
+        #os.system("docker-compose -f compose.yaml --env-file .env up -d")
         sleep(1)
         self.killer_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoia2lsbGVyIiwicm9sZSI6IndyaXRlIn0.DTHlSwBvmPn7soPbSlZn4vn28Z6r1EhC_kgE-0_lxzs"
 
@@ -80,10 +80,19 @@ class integration_test(unittest.TestCase):
         self.assertEqual(get_req("file1", token=self.killer_token).text, '{"Apple":100}')  
         
         self.assertEqual(delete_req("file1", token=self.killer_token).status_code, 204)  
-        self.assertEqual(get_req("file1", token=self.killer_token).status_code, 404)   
-
+        self.assertEqual(get_req("file1", token=self.killer_token).status_code, 404) 
+          
+    def test_timeouts(self):
+    
+        auth('killer', 'qwerty123')
+        self.assertEqual(get_req("wait", token=self.killer_token).status_code, 408) 
+        
+        
+        
+        
     def tearDown(self):
-        os.system("make stop")
+        #os.system("make stop")
+        pass
 
 if __name__ == '__main__':
     unittest.main()

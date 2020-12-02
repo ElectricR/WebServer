@@ -5,7 +5,14 @@ import controller
 import service
 import os
 
+from time import sleep
+
 app = Flask(__name__)
+
+@app.route('/wait', methods=['GET'])
+def wait_req():
+    sleep(20)
+    return 'Hello there', 200
 
 @app.route('/storage/<file_name>', methods=['GET'])
 def get_req(file_name):
