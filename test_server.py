@@ -28,7 +28,7 @@ class integration_test(unittest.TestCase):
 
     def setUp(self):
         dotenv.load_dotenv()
-        #os.system("docker-compose -f compose.yaml --env-file .env up -d")
+        os.system("docker-compose -f compose.yaml --env-file .env up -d")
         sleep(1)
         self.killer_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoia2lsbGVyIiwicm9sZSI6IndyaXRlIn0.DTHlSwBvmPn7soPbSlZn4vn28Z6r1EhC_kgE-0_lxzs"
 
@@ -91,7 +91,7 @@ class integration_test(unittest.TestCase):
         
         
     def tearDown(self):
-        #os.system("make stop")
+        os.system("make stop")
         pass
 
 if __name__ == '__main__':
