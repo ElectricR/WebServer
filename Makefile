@@ -20,7 +20,7 @@ test:
 	python3 test_server.py
 
 clean:
-	docker image rm electricrainbow/pm-default-server-image:$(SERVER_VERSION) electricrainbow/pm-balancer-server-image:$(BALANCER_VERSION) mongo redis
+	./clean_script.sh
 	
 
 healthcheck:

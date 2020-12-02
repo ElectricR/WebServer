@@ -5,6 +5,7 @@ COPY server.py /
 COPY controller.py /
 COPY service.py /
 COPY repository.py /
+COPY logging.conf /
 COPY .env /
 STOPSIGNAL SIGINT
 CMD python3 server.py
