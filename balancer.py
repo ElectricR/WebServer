@@ -10,6 +10,9 @@ import os
 
 app = Flask(__name__)
 
+def get_url():
+	return 'http://{0}:{1}/storage/{2}'.format(f'pm-default-server-container-{str(hash(file_name)%2 + 1)}', f'{int(os.environ["PORT"]) + hash(file_name)%2 + 1}', file_name)
+
 class Balancer:
     
     def __init__(self):
@@ -62,7 +65,7 @@ class Balancer:
         except:
             return '', 403
         try:
-            resp = self.http.get('http://{0}:{1}/storage/{2}'.format(f'pm-default-server-container-{str(hash(file_name)%2 + 1)}', f'{int(os.environ["PORT"]) + hash(file_name)%2 + 1}', file_name), timeout=1)
+            resp = self.http.get(get_url(), timeout=1)
         except req.exceptions.ConnectionError:
             return '', 408
             
@@ -78,7 +81,7 @@ class Balancer:
         del headers['Authorization']
         
         try:
-            resp = self.http.put('http://{0}:{1}/storage/{2}'.format(f'pm-default-server-container-{str(hash(file_name)%2 + 1)}', f'{int(os.environ["PORT"]) + hash(file_name)%2 + 1}' , file_name) , data = request.data.decode(), headers = headers, timeout=1)
+            resp = self.http.put(get_url(), data = request.data.decode(), headers = headers, timeout=1)
         except req.exceptions.ConnectionError:
             return '', 408
         return resp.text, resp.status_code
@@ -90,7 +93,7 @@ class Balancer:
             return '', 403
             
         try:
-            resp = self.http.delete('http://{0}:{1}/storage/{2}'.format(f'pm-default-server-container-{str(hash(file_name)%2 + 1)}', f'{int(os.environ["PORT"]) + hash(file_name)%2 + 1}' , file_name), timeout=1)
+            resp = self.http.delete(get_url(), timeout=1)
         except req.exceptions.ConnectionError:
             return '', 408
             
