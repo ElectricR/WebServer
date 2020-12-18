@@ -10,8 +10,10 @@ import os
 
 app = Flask(__name__)
 
+INSTANCE_COUNT = int(os.environ["INSTANCE_COUNT"])
+
 def get_url(file_name):
-	return 'http://{0}:{1}/storage/{2}'.format(f'pm-default-server-container-{str(hash(file_name)%2 + 1)}', f'{int(os.environ["PORT"]) + hash(file_name)%2 + 1}', file_name)
+	return 'http://{0}:{1}/storage/{2}'.format(f'pm-default-server-container-{str(hash(file_name) % INSTANCE_COUNT + 1)}', f'{int(os.environ["PORT"]) + hash(file_name) % INSTANCE_COUNT + 1}', file_name)
 
 def get_wait_url():
 	return 'http://{0}:{1}/wait'.format(f'pm-default-server-container-1', f'{int(os.environ["PORT"]) + 1}')
