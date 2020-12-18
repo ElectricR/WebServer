@@ -13,10 +13,11 @@ app = Flask(__name__)
 INSTANCE_COUNT = int(os.environ["INSTANCE_COUNT"])
 
 def get_url(file_name):
-	return 'http://{0}:{1}/storage/{2}'.format(f'pm-default-server-container-{str(hash(file_name) % INSTANCE_COUNT + 1)}', f'{int(os.environ["PORT"]) + hash(file_name) % INSTANCE_COUNT + 1}', file_name)
+    instance = hash(file_name) % INSTANCE_COUNT + 1
+    return 'http://{0}:{1}/storage/{2}'.format(f'pm-default-server-container-{str(instance)}', f'{int(os.environ["PORT"]) + instance}', file_name)
 
 def get_wait_url():
-	return 'http://{0}:{1}/wait'.format(f'pm-default-server-container-1', f'{int(os.environ["PORT"]) + 1}')
+    return 'http://{0}:{1}/wait'.format(f'pm-default-server-container-1', f'{int(os.environ["PORT"]) + 1}')
 
 class Balancer:
     
