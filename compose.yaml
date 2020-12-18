@@ -16,8 +16,6 @@ services:
     server1:
         image: electricrainbow/pm-default-server-image:${SERVER_VERSION}
         container_name: pm-default-server-container-1
-        ports:
-          - "${SERVER1_PORT}"
         networks:
           - pm-network
         depends_on:
@@ -30,8 +28,6 @@ services:
     server2:
         image: electricrainbow/pm-default-server-image:${SERVER_VERSION}
         container_name: pm-default-server-container-2
-        ports:
-          - "${SERVER2_PORT}"
         networks:
           - pm-network
         depends_on:
@@ -44,16 +40,12 @@ services:
     redis1:
         image: redis
         container_name: redis1
-        ports:
-          - "6379"
         command: --port 6379
         networks:
           - pm-network
     redis2:
         image: redis
         container_name: redis2
-        ports:
-          - "6380"
         command: --port 6380
         networks:
           - pm-network
