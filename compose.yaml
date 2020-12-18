@@ -12,6 +12,7 @@ services:
           - pm-network
         environment:
           - PORT=${BALANCER_PORT}
+          - INSTANCE_COUNT=${INSTANCE_COUNT}
     server1:
         image: electricrainbow/pm-default-server-image:${SERVER_VERSION}
         container_name: pm-default-server-container-1
