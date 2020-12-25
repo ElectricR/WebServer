@@ -10,8 +10,11 @@ push:
 build:
 	docker-compose -f compose_build.yaml --env-file .env build
 
-start:
+start: compose.yaml
 	docker-compose -f compose.yaml --env-file .env up 
+
+compose.yaml:
+	python3 ./scripts/create_compose.py
 
 stop:
 	docker-compose -f compose.yaml --env-file .env down
@@ -20,7 +23,7 @@ test:
 	python3 test_server.py
 
 clean:
-	./clean_script.sh
+	./scripts/clean_script.sh
 	
 
 healthcheck:
@@ -28,4 +31,4 @@ healthcheck:
 	which docker-compose > /dev/null && echo "Everything's ready" || >&2 echo "Docker-compose is not installed"
 
 
-.PHONY: build start stop healthcheck clean push
+.PHONY: test build start stop healthcheck clean push

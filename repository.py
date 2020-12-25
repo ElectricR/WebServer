@@ -2,15 +2,13 @@ import pymongo
 import redis
 import logging
 import logging.config
-import os
-
 
 class Cache:
 
-    def __init__(self):
+    def __init__(self, cache_host, cache_port):
         logging.config.fileConfig("logging.conf")
         self.logger = logging.getLogger("InstanceLogger")
-        self.cache = redis.Redis(host=os.environ["REDIS_HOST"], port=os.environ["REDIS_PORT"])
+        self.cache = redis.Redis(cache_host, cache_port)
     
     def exists(self, file_name):
         self.logger.debug(f'Checking presence of {file_name} in cache')
@@ -32,10 +30,10 @@ class Cache:
 
 class DBase:
 
-    def __init__(self):
+    def __init__(self, database_port):
         logging.config.fileConfig("logging.conf")
         self.logger = logging.getLogger("InstanceLogger")
-        mongoClient = pymongo.MongoClient(host='mongo', port=27017)
+        mongoClient = pymongo.MongoClient(host='mongo', port=database_port)
         self.dbase = mongoClient["hw9"]["files"]
         
     def get(self, file_name):

@@ -25,6 +25,6 @@ def delete_req(file_name):
     return controller.handle_delete(file_name)
 
 if __name__ == '__main__':
-    controller = Controller(Service(Cache(), DBase()))
+    controller = Controller(Service(Cache(os.environ['REDIS_HOST'], os.environ['REDIS_PORT']), DBase(int(os.environ['DATABASE_PORT']))))
     
     app.run(host='0.0.0.0', port=os.environ["PORT"])

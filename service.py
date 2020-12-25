@@ -8,23 +8,23 @@ class Service:
 
     def get(self, request):
         resp = Responce(request)
-        if self.cache.exists(file_name):
-            resp.data = self.cache.get(file_name)
+        if self.cache.exists(request.key):
+            resp.data = self.cache.get(request.key)
             resp.is_successful = True
         else:
-            data = self.database.get(file_name)
+            data = self.database.get(request.key)
             if data != None:
-                self.cache.put(file_name, data)
+                self.cache.put(request.key, data)
                 resp.data = data
                 resp.is_successful = True
         return resp
 
     def put(self, request):
-        self.database.put(file_name, data)
+        self.database.put(request.key, request.data)
         return Responce(request, is_successful = True)  
 
     def delete(self, request):
         if self.cache.exists:
-            self.cache.delete(file_name)
-        self.database.delete(file_name)
+            self.cache.delete(request.key)
+        self.database.delete(request.key)
         return Responce(request, is_successful = True)  

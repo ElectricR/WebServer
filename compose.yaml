@@ -8,6 +8,7 @@ services:
         depends_on:
           - server1
           - server2
+          - server3
         networks:
           - pm-network
         environment:
@@ -25,6 +26,13 @@ services:
           - PORT=${SERVER1_PORT}
           - REDIS_PORT=${REDIS1_PORT}
           - REDIS_HOST=redis1
+          - DATABASE_PORT=${DATABASE_PORT}
+    redis1:
+        image: redis
+        container_name: redis1
+        command: --port 6379
+        networks:
+          - pm-network
     server2:
         image: electricrainbow/pm-default-server-image:${SERVER_VERSION}
         container_name: pm-default-server-container-2
@@ -37,16 +45,30 @@ services:
           - PORT=${SERVER2_PORT}
           - REDIS_PORT=${REDIS2_PORT}
           - REDIS_HOST=redis2
-    redis1:
-        image: redis
-        container_name: redis1
-        command: --port 6379
-        networks:
-          - pm-network
+          - DATABASE_PORT=${DATABASE_PORT}
     redis2:
         image: redis
         container_name: redis2
         command: --port 6380
+        networks:
+          - pm-network
+    server3:
+        image: electricrainbow/pm-default-server-image:${SERVER_VERSION}
+        container_name: pm-default-server-container-3
+        networks:
+          - pm-network
+        depends_on:
+          - redis3
+          - mongo
+        environment:
+          - PORT=${SERVER3_PORT}
+          - REDIS_PORT=${REDIS3_PORT}
+          - REDIS_HOST=redis3
+          - DATABASE_PORT=${DATABASE_PORT}
+    redis3:
+        image: redis
+        container_name: redis3
+        command: --port 6381
         networks:
           - pm-network
     mongo:
