@@ -4,4 +4,6 @@
 * $ make stop - остановка веб-сервера.
 * $ make test - запуск тестов, описанных в test_server.py.
 * $ make clean - удаление всех контейнеров, всех образов инстанса и балансировщика, всех образов с именем none, а также удаление compose.yaml.
-* $ make healthcheck - проверка наличия docker и docker-compose.
+* $ make healthcheck - проверка наличия docker, docker-compose, flake8, autopep8.
+* $ make lint - проверка стандартизованности кода с помощью flake8.
+* $ make autopep - автоисправление кода для соответствия стандарту с помощью autopep8

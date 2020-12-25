@@ -24,11 +24,18 @@ test: compose.yaml
 
 clean:
 	./scripts/clean_script.sh
-	
+
+lint:
+	flake8 balancer.py controller.py repository.py server.py service.py test_server.py utils.py ./scripts/create_compose.py
+
+autopep:
+	autopep8 -i balancer.py controller.py repository.py server.py service.py test_server.py utils.py ./scripts/create_compose.py
 
 healthcheck:
-	which docker > /dev/null && echo "Docker is installed" || >&2 echo "Docker is not installed"
-	which docker-compose > /dev/null && echo "Everything's ready" || >&2 echo "Docker-compose is not installed"
+	which docker > /dev/null && echo "Docker is installed" || >&2 echo "Docker is not installed"; \
+	which flake8 > /dev/null && echo "Flake8 is installed" || >&2 echo "Flake8 is not installed"; \
+	which docker-compose > /dev/null && echo "Docker-compose is installed" || >&2 echo "Docker-compose is not installed"; \
+	which autopep8 > /dev/null && echo "Everything's ready" || >&2 echo "Autopep8 is not installed";
 
 
 .PHONY: test build start stop healthcheck clean push

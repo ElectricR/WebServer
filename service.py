@@ -1,7 +1,8 @@
-from utils import Request, Responce
+from utils import Responce
+
 
 class Service:
-    
+
     def __init__(self, cache, database):
         self.cache = cache
         self.database = database
@@ -13,7 +14,7 @@ class Service:
             resp.is_successful = True
         else:
             data = self.database.get(request.key)
-            if data != None:
+            if data is None:
                 self.cache.put(request.key, data)
                 resp.data = data
                 resp.is_successful = True
@@ -23,10 +24,10 @@ class Service:
         if self.cache.exists:
             self.cache.delete(request.key)
         self.database.put(request.key, request.data)
-        return Responce(request, is_successful = True)  
+        return Responce(request, is_successful=True)
 
     def delete(self, request):
         if self.cache.exists:
             self.cache.delete(request.key)
         self.database.delete(request.key)
-        return Responce(request, is_successful = True)  
+        return Responce(request, is_successful=True)

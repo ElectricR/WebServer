@@ -1,8 +1,8 @@
 import os
 from dotenv import load_dotenv
 
-INITIAL_PORT=10050
-REDIS_INITIAL_PORT=6379
+INITIAL_PORT = 10050
+REDIS_INITIAL_PORT = 6379
 
 load_dotenv()
 
