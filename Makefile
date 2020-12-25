@@ -19,7 +19,7 @@ compose.yaml:
 stop:
 	docker-compose -f compose.yaml --env-file .env down
 
-test:
+test: compose.yaml
 	python3 test_server.py
 
 clean:
