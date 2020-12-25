@@ -1,21 +1,30 @@
-import repository
+from utils import Request, Responce
 
 class Service:
     
-    def __init__(self):
-        self.repo = repository.Repository()
-    
-    def get(self, file_name):
-        if self.repo.exists_in_cache(file_name):
-            return self.repo.get_from_cache(file_name)
+    def __init__(self, cache, database):
+        self.cache = cache
+        self.database = database
+
+    def get(self, request):
+        resp = Responce(request)
+        if self.cache.exists(file_name):
+            resp.data = self.cache.get(file_name)
+            resp.is_successful = True
         else:
-            return self.repo.get_from_dbase(file_name)
-    
-    def put(self, file_name, data, dest = 'dbase'):
-        if dest == 'cache':
-            self.repo.put_to_cache(file_name, data)
-        elif dest == 'dbase':
-            self.repo.put_to_dbase(file_name, data)
-    
-    def delete(self, file_name):
-    	self.repo.delete(file_name)
+            data = self.database.get(file_name)
+            if data != None:
+                self.cache.put(file_name, data)
+                resp.data = data
+                resp.is_successful = True
+        return resp
+
+    def put(self, request):
+        self.database.put(file_name, data)
+        return Responce(request, is_successful = True)  
+
+    def delete(self, request):
+        if self.cache.exists:
+            self.cache.delete(file_name)
+        self.database.delete(file_name)
+        return Responce(request, is_successful = True)  
