@@ -8,21 +8,21 @@ from time import sleep
 def put_req(target, data, token = None):
     headers = {'Content-Type':'application/json'}
     if token: headers['Authorization'] = f'Bearer {token}'
-    return req.put(f'http://localhost:{os.environ["PORT"]}/{target}', data=data, headers=headers)
+    return req.put(f'http://localhost:{os.environ["BALANCER_PORT"]}/{target}', data=data, headers=headers)
 
 def get_req(target, token = None):
     headers = {}
     if token: headers['Authorization'] = f'Bearer {token}'
-    return req.get(f'http://localhost:{os.environ["PORT"]}/{target}', headers=headers)
+    return req.get(f'http://localhost:{os.environ["BALANCER_PORT"]}/{target}', headers=headers)
 
 def delete_req(target, token = None):
     headers = {}
     if token: headers['Authorization'] = f'Bearer {token}'
-    return req.delete(f'http://localhost:{os.environ["PORT"]}/{target}', headers=headers)
+    return req.delete(f'http://localhost:{os.environ["BALANCER_PORT"]}/{target}', headers=headers)
 
 def auth(login, password):
     headers = {'Authorization': "Basic " + base64.standard_b64encode(f'{login}:{password}'.encode()).decode()}
-    return req.get(f'http://localhost:{os.environ["PORT"]}/auth', headers = headers)
+    return req.get(f'http://localhost:{os.environ["BALANCER_PORT"]}/auth', headers = headers)
 
 class integration_test(unittest.TestCase):
 
