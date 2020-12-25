@@ -23,8 +23,6 @@ class Controller:
         service_responce = self.service.put(Request('PUT', key = file_name, data = data))
         if service_responce.is_successful:
             return '', 201
-        else:
-            return '', 500
 
     def handle_delete(self, file_name):
         service_responce = self.service.delete(Request('DELETE', key = file_name))

@@ -20,6 +20,8 @@ class Service:
         return resp
 
     def put(self, request):
+        if self.cache.exists:
+            self.cache.delete(request.key)
         self.database.put(request.key, request.data)
         return Responce(request, is_successful = True)  
 
