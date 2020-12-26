@@ -45,8 +45,8 @@ class integration_test(unittest.TestCase):
 
     def setUp(self):
         dotenv.load_dotenv()
-        #os.system("docker-compose -f compose.yaml --env-file .env up -d")
-        #sleep(2)
+        os.system("docker-compose -f compose.yaml --env-file .env up -d")
+        sleep(2)
         self.killer_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoia2lsbGVyIiwicm9sZSI6IndyaXRlIn0.DTHlSwBvmPn7soPbSlZn4vn28Z6r1EhC_kgE-0_lxzs"
 
     def test_authorization(self):
@@ -139,7 +139,7 @@ class integration_test(unittest.TestCase):
             get_req("wait", token=self.killer_token).status_code, 408)
 
     def tearDown(self):
-        #os.system("make stop")
+        os.system("make stop")
         pass
 
 
