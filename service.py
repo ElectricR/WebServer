@@ -14,7 +14,7 @@ class Service:
             resp.is_successful = True
         else:
             data = self.database.get(request.key)
-            if data is None:
+            if data is not None:
                 self.cache.put(request.key, data)
                 resp.data = data
                 resp.is_successful = True
